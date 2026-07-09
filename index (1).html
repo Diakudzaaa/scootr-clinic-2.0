@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scooter Clinic — ремонт електросамокатів</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --navy:#122B52;
+  --blue:#1B4D8F;
+  --volt:#7CB928;
+  --volt-dark:#5C8F1B;
+  --paper:#F3F2ED;
+  --paper-2:#EAE8E0;
+  --steel:#5A6472;
+  --ink:#181D24;
+  --amber:#D9922E;
+  --card:#FFFFFF;
+  --radius:2px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+h1,h2,h3,.display{
+  font-family:'Space Grotesk',sans-serif;
+  letter-spacing:-0.01em;
+}
+
+.mono{
+  font-family:'IBM Plex Mono',monospace;
+}
+
+a{color:inherit;text-decoration:none;}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(243,242,237,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(18,43,82,0.12);
+}
+.nav-inner{
+  max-width:1180px;
+  margin:0 auto;
+  padding:14px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:19px;
+  color:var(--navy);
+}
+.brand img{height:34px;width:auto;display:block;}
+.nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;color:var(--navy);}
+.nav-links a{position:relative;padding:4px 0;}
+.nav-links a::after{
+  content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--volt);
+  transition:width .25s ease;
+}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  font-weight:500;
+  background:var(--navy);
+  color:var(--paper);
+  padding:10px 18px;
+  border-radius:var(--radius);
+}
+@media(max-width:760px){ .nav-links{display:none;} }
+
+/* ---------- HERO ---------- */
+.hero{
+  padding:64px 0 90px;
+  position:relative;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:60px;
+  align-items:center;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  color:var(--volt-dark);
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+}
+.eyebrow::before{
+  content:"";width:8px;height:8px;background:var(--volt);border-radius:50%;
+  box-shadow:0 0 0 4px rgba(124,185,40,0.18);
+}
+.hero h1{
+  font-size:clamp(38px,5.4vw,60px);
+  font-weight:700;
+  color:var(--navy);
+  line-height:1.04;
+  margin-bottom:22px;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--blue);
+  text-decoration:underline;
+  text-decoration-color:var(--volt);
+  text-decoration-thickness:4px;
+  text-underline-offset:6px;
+}
+.hero p.lead{
+  font-size:18px;
+  color:var(--steel);
+  max-width:480px;
+  margin-bottom:34px;
+}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:15px 28px;
+  border-radius:var(--radius);
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  border:none;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:var(--volt);
+  color:var(--navy);
+  box-shadow:0 6px 0 var(--volt-dark);
+}
+.btn-primary:hover{box-shadow:0 8px 0 var(--volt-dark);}
+.btn-ghost{
+  background:transparent;
+  color:var(--navy);
+  border:1.5px solid rgba(18,43,82,0.35);
+}
+.btn-ghost:hover{border-color:var(--navy);}
+
+/* diagnostic tag — signature element */
+.tag-scene{
+  position:relative;
+  display:flex;
+  justify-content:center;
+}
+.tag-photo{
+  position:relative;
+  width:100%;
+  max-width:380px;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(18,43,82,0.35);
+}
+.tag-photo img{width:100%;display:block;}
+
+.repair-tag{
+  position:absolute;
+  top:-30px;
+  right:-48px;
+  width:210px;
+  background:#FBF9F2;
+  border:1px solid rgba(18,43,82,0.15);
+  border-radius:4px;
+  padding:16px 16px 18px;
+  box-shadow:0 14px 30px -10px rgba(18,43,82,0.4);
+  transform:rotate(6deg);
+  animation:swing 5s ease-in-out infinite;
+  transform-origin:top center;
+}
+.repair-tag::before{
+  content:"";
+  position:absolute;
+  top:-22px;
+  left:50%;
+  width:2px;
+  height:24px;
+  background:var(--steel);
+}
+.repair-tag::after{
+  content:"";
+  position:absolute;
+  top:-26px;
+  left:calc(50% - 6px);
+  width:12px;height:12px;
+  border:2px solid var(--steel);
+  border-radius:50%;
+  background:var(--paper);
+}
+@keyframes swing{
+  0%,100%{transform:rotate(6deg);}
+  50%{transform:rotate(2deg);}
+}
+.repair-tag .tnum{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--steel);
+  border-bottom:1px dashed rgba(18,43,82,0.25);
+  padding-bottom:8px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+}
+.repair-tag .titem{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12.5px;
+  color:var(--ink);
+  margin-bottom:7px;
+}
+.repair-tag .titem .box{
+  width:13px;height:13px;
+  border:1.5px solid var(--volt-dark);
+  border-radius:2px;
+  background:var(--volt);
+  flex-shrink:0;
+  position:relative;
+}
+.repair-tag .titem .box::after{
+  content:"";
+  position:absolute;
+  left:3px;top:0px;
+  width:4px;height:8px;
+  border-right:2px solid #fff;
+  border-bottom:2px solid #fff;
+  transform:rotate(40deg);
+}
+.repair-tag .titem.pending .box{background:transparent;border-color:rgba(18,43,82,0.3);}
+.repair-tag .titem.pending .box::after{display:none;}
+.repair-tag .titem.pending{color:var(--steel);}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .repair-tag{right:8px;top:-26px;width:180px;}
+}
+
+/* ---------- SECTION HEADERS ---------- */
+.section{padding:90px 0;}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:30px;
+  margin-bottom:48px;
+  border-bottom:1px solid rgba(18,43,82,0.14);
+  padding-bottom:22px;
+}
+.section-head .tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  color:var(--blue);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-bottom:10px;
+  display:block;
+}
+.section-head h2{
+  font-size:clamp(28px,3.4vw,38px);
+  color:var(--navy);
+  font-weight:700;
+}
+.section-head p{
+  color:var(--steel);
+  max-width:320px;
+  font-size:14.5px;
+}
+.alt{background:var(--paper-2);}
+
+/* ---------- SERVICES: repair-ticket cards ---------- */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:22px;
+}
+.ticket{
+  background:var(--card);
+  border-radius:var(--radius);
+  position:relative;
+  padding:26px 24px 24px;
+  border:1px solid rgba(18,43,82,0.1);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.ticket:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 34px -18px rgba(18,43,82,0.35);
+}
+.ticket::before{
+  content:"";
+  position:absolute;
+  left:0;top:22px;bottom:22px;
+  width:4px;
+  background:var(--volt);
+  border-radius:0 3px 3px 0;
+}
+.ticket-id{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  color:var(--steel);
+  margin-bottom:14px;
+  display:block;
+}
+.ticket h3{
+  font-size:20px;
+  color:var(--navy);
+  margin-bottom:10px;
+}
+.ticket p{
+  font-size:14px;
+  color:var(--steel);
+  margin-bottom:20px;
+  min-height:44px;
+}
+.ticket .price{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:22px;
+  font-weight:600;
+  color:var(--blue);
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  border-top:1px dashed rgba(18,43,82,0.2);
+  padding-top:14px;
+}
+.ticket .price span.from{font-size:11px;color:var(--steel);font-weight:400;font-family:'Inter',sans-serif;}
+
+/* ---------- WHY US: inspection checklist ---------- */
+.check-panel{
+  background:var(--navy);
+  border-radius:6px;
+  padding:52px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:36px;
+  color:var(--paper);
+}
+.check-panel .lead-col h2{color:var(--paper);margin-bottom:16px;}
+.check-panel .lead-col p{color:#B9C4D6;font-size:15px;max-width:340px;}
+.checklist{list-style:none;}
+.checklist li{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.checklist li:last-child{border-bottom:none;}
+.checklist .num{
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--volt);
+  font-size:13px;
+  padding-top:2px;
+}
+.checklist strong{display:block;font-size:15.5px;margin-bottom:3px;}
+.checklist span{font-size:13.5px;color:#B9C4D6;}
+@media(max-width:760px){.check-panel{grid-template-columns:1fr;padding:34px 24px;}}
+
+/* ---------- GALLERY: case files ---------- */
+.case-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.case{
+  background:var(--card);
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid rgba(18,43,82,0.1);
+}
+.case-photo{
+  position:relative;
+  aspect-ratio:4/5;
+  overflow:hidden;
+}
+.case-photo img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease;
+}
+.case:hover .case-photo img{transform:scale(1.06);}
+.case-photo .stamp{
+  position:absolute;
+  top:14px;left:14px;
+  background:rgba(18,43,82,0.88);
+  color:var(--volt);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  padding:5px 10px;
+  border-radius:3px;
+  letter-spacing:0.05em;
+}
+.case-info{padding:18px 20px 22px;}
+.case-info .model{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  color:var(--navy);
+  font-size:17px;
+  margin-bottom:4px;
+}
+.case-info .note{font-size:13.5px;color:var(--steel);}
+@media(max-width:820px){.case-grid{grid-template-columns:1fr;}}
+
+/* ---------- REVIEWS ---------- */
+.review-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.review-card{
+  background:var(--card);
+  border:1px solid rgba(18,43,82,0.1);
+  border-radius:6px;
+  padding:26px 24px;
+  position:relative;
+}
+.review-card .stars{color:var(--volt-dark);font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+.review-card p{font-size:14.5px;color:var(--ink);margin-bottom:18px;}
+.review-card .who{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  color:var(--steel);
+  border-top:1px dashed rgba(18,43,82,0.2);
+  padding-top:12px;
+}
+@media(max-width:820px){.review-row{grid-template-columns:1fr;}}
+
+/* ---------- CONTACT: new ticket form ---------- */
+.contact-wrap{
+  display:grid;
+  grid-template-columns:0.9fr 1.1fr;
+  gap:50px;
+  align-items:start;
+}
+.contact-info h2{color:var(--navy);margin-bottom:18px;}
+.contact-info p{color:var(--steel);font-size:15px;margin-bottom:30px;max-width:380px;}
+.info-row{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:22px;
+}
+.info-row .ico{
+  width:34px;height:34px;
+  border-radius:50%;
+  background:rgba(27,77,143,0.1);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--blue);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:-0.02em;
+  flex-shrink:0;
+}
+.info-row strong{display:block;font-size:14.5px;color:var(--navy);}
+.info-row span{font-size:14px;color:var(--steel);}
+
+.order-form{
+  background:var(--card);
+  border:1px solid rgba(18,43,82,0.12);
+  border-radius:8px;
+  padding:36px;
+  position:relative;
+}
+.order-form .form-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px dashed rgba(18,43,82,0.25);
+  padding-bottom:16px;
+  margin-bottom:22px;
+}
+.order-form .form-head h3{color:var(--navy);font-size:18px;}
+.order-form .form-head .mono{font-size:12px;color:var(--steel);}
+.field{margin-bottom:18px;}
+.field label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--navy);
+  margin-bottom:7px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.field input,.field textarea,.field select{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid rgba(18,43,82,0.2);
+  border-radius:4px;
+  font-family:'Inter',sans-serif;
+  font-size:14.5px;
+  background:#FCFBF8;
+  transition:border-color .15s ease;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;
+  border-color:var(--blue);
+}
+.field textarea{resize:vertical;min-height:100px;}
+.submit-btn{
+  width:100%;
+  padding:16px;
+  background:var(--navy);
+  color:var(--paper);
+  border:none;
+  border-radius:4px;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  transition:background .15s ease;
+}
+.submit-btn:hover{background:#0C1D3A;}
+.form-note{
+  margin-top:12px;
+  font-size:12.5px;
+  color:var(--steel);
+  min-height:16px;
+}
+@media(max-width:900px){.contact-wrap{grid-template-columns:1fr;}}
+
+/* ---------- WORKSHOP BACKGROUND GALLERY ---------- */
+.workshop{
+  position:relative;
+  padding:90px 0;
+  background:url('images/bg-parts-2.jpg') center/cover no-repeat fixed;
+}
+.workshop-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(18,43,82,0.94) 0%, rgba(18,43,82,0.88) 100%);
+}
+.workshop-inner{position:relative;z-index:2;}
+.workshop-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.wshot{
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  aspect-ratio:3/4;
+  border:1px solid rgba(255,255,255,0.15);
+  display:block;
+}
+.wshot img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.wshot:hover img{transform:scale(1.07);}
+.ig-phone{position:relative;}
+.ig-phone .ig-label{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  padding:14px 12px;
+  background:linear-gradient(0deg, rgba(18,43,82,0.95), transparent);
+  color:var(--volt);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  text-align:center;
+}
+@media(max-width:900px){
+  .workshop-grid{grid-template-columns:repeat(2,1fr);}
+  .workshop{background-attachment:scroll;}
+}
+
+/* ---------- BATTERY REPACK ---------- */
+.battery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+  margin-bottom:30px;
+}
+.bshot{
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  border:1px solid rgba(18,43,82,0.12);
+}
+.bshot img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.bshot:hover img{transform:scale(1.06);}
+.bshot .bstep{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  padding:12px 14px;
+  background:linear-gradient(0deg, rgba(18,43,82,0.92), transparent);
+  color:#fff;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+}
+.battery-note{
+  background:var(--paper-2);
+  border-left:4px solid var(--volt);
+  padding:20px 24px;
+  border-radius:4px;
+  font-size:14.5px;
+  color:var(--steel);
+  max-width:760px;
+}
+.battery-note strong{color:var(--navy);}
+@media(max-width:820px){.battery-grid{grid-template-columns:1fr;}}
+
+/* ---------- BUYBACK BANNER ---------- */
+.buyback{
+  background:var(--volt);
+  padding:56px 0;
+}
+.buyback-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+.buyback-text h2{color:var(--navy);font-size:clamp(24px,3vw,32px);margin:8px 0 10px;}
+.buyback-text p{color:#12331f;font-size:14.5px;max-width:460px;}
+.btn-large{
+  background:var(--navy);
+  color:#fff;
+  box-shadow:0 6px 0 #0B1E3C;
+  white-space:nowrap;
+}
+.btn-large:hover{box-shadow:0 8px 0 #0B1E3C;}
+@media(max-width:760px){.buyback-inner{flex-direction:column;align-items:flex-start;}}
+
+/* ---------- VIDEO ---------- */
+.video-frame{
+  position:relative;
+  width:100%;
+  max-width:860px;
+  margin:0 auto;
+  aspect-ratio:16/9;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 24px 50px -20px rgba(18,43,82,0.4);
+  border:1px solid rgba(18,43,82,0.12);
+}
+.video-frame iframe{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  border:none;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--navy);
+  color:#B9C4D6;
+  padding:56px 0 30px;
+}
+.foot-top{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:30px;
+  padding-bottom:36px;
+  border-bottom:1px solid rgba(255,255,255,0.12);
+  margin-bottom:26px;
+}
+.foot-brand{display:flex;align-items:center;gap:10px;}
+.foot-brand img{height:30px;filter:brightness(0) invert(1);}
+.foot-brand span{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:17px;}
+.foot-links{display:flex;gap:36px;flex-wrap:wrap;font-size:14px;}
+.foot-links a:hover{color:var(--volt);}
+.foot-social{
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+  font-size:13px;
+  font-family:'IBM Plex Mono',monospace;
+  margin-bottom:22px;
+  color:#B9C4D6;
+}
+.foot-social a:hover{color:var(--volt);}
+.foot-bottom{
+  display:flex;
+  justify-content:space-between;
+  font-size:12.5px;
+  color:#7C8AA3;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+::selection{background:var(--volt);color:var(--navy);}
+
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand"><img src="images/logo-transparent.png" alt="Scooter Clinic"> Scooter&nbsp;Clinic</div>
+    <div class="nav-links">
+      <a href="#services">Послуги</a>
+      <a href="#why">Чому ми</a>
+      <a href="#cases">Кейси</a>
+      <a href="#workshop">Майстерня</a>
+      <a href="#battery">Акумулятори</a>
+      <a href="#reviews">Відгуки</a>
+      <a href="#contact">Контакти</a>
+    </div>
+    <a href="#contact" class="nav-cta">Здати в ремонт →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Прийом самокатів щодня · Вараш</div>
+      <h1>Самокат не їде?<br>Ми ставимо <em>точний</em><br>діагноз за 30 хв.</h1>
+      <p class="lead">Ремонтуємо контролери, акумулятори та ходову частину Xiaomi, Kugoo та інших моделей. Кожен самокат отримує власний номер ремонту та письмовий висновок.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Записатись на діагностику</a>
+        <a href="#services" class="btn btn-ghost">Прайс на ремонт</a>
+      </div>
+    </div>
+    <div class="tag-scene">
+      <div class="tag-photo">
+        <img src="images/m365.jpg" alt="Самокат Xiaomi M365 на діагностиці в Scooter Clinic">
+      </div>
+      <div class="repair-tag">
+        <div class="tnum"><span>ТИКЕТ</span><span>#0231</span></div>
+        <div class="titem"><div class="box"></div> Акумулятор — ОК</div>
+        <div class="titem"><div class="box"></div> Гальма — ОК</div>
+        <div class="titem pending"><div class="box"></div> Контролер — заміна</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">Прайс-лист</span>
+        <h2>Послуги ремонту</h2>
+      </div>
+      <p>Фіксована вартість діагностики зараховується в оплату ремонту, якщо ви його замовите.</p>
+    </div>
+    <div class="services-grid">
+      <div class="ticket reveal">
+        <span class="ticket-id">РОБОТА · №01</span>
+        <h3>Діагностика</h3>
+        <p>Повна перевірка електроніки, двигуна та акумулятора з письмовим висновком.</p>
+        <div class="price"><span class="from">від</span>300 грн</div>
+      </div>
+      <div class="ticket reveal">
+        <span class="ticket-id">РОБОТА · №02</span>
+        <h3>Ремонт акумулятора</h3>
+        <p>Перепакування елементів, балансування банок, заміна плати BMS.</p>
+        <div class="price"><span class="from">від</span>1500 грн</div>
+      </div>
+      <div class="ticket reveal">
+        <span class="ticket-id">РОБОТА · №03</span>
+        <h3>Ремонт контролера</h3>
+        <p>Заміна силових ключів, відновлення плати після короткого замикання.</p>
+        <div class="price"><span class="from">від</span>800 грн</div>
+      </div>
+      <div class="ticket reveal">
+        <span class="ticket-id">РОБОТА · №04</span>
+        <h3>Заміна коліс</h3>
+        <p>Литі, камерні та безкамерні шини — в наявності або під замовлення.</p>
+        <div class="price"><span class="from">від</span>500 грн</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="battery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">Друге життя акумулятора</span>
+        <h2>Перепакування батарей</h2>
+      </div>
+      <p>Міняємо "втомлені" банки на нові, перепаюємо збірку і повертаємо самокату початковий запас ходу — а часом і більший.</p>
+    </div>
+
+    <div class="battery-grid">
+      <div class="bshot reveal">
+        <img src="images/battery-1.jpg" alt="Стара збірка акумулятора з окисленими контактами">
+        <span class="bstep">01 · Діагностика банок</span>
+      </div>
+      <div class="bshot reveal">
+        <img src="images/battery-3.jpg" alt="Нова збірка з платою BMS">
+        <span class="bstep">02 · Збірка з новою платою BMS</span>
+      </div>
+      <div class="bshot reveal">
+        <img src="images/battery-5.jpg" alt="Готовий акумулятор в термоусадці">
+        <span class="bstep">03 · Упаковка і термоусадка</span>
+      </div>
+    </div>
+
+    <div class="battery-note reveal">
+      <strong>Чому це вигідно:</strong> нова батарея коштує в 3-4 рази дорожче за перепакування. Ми замінюємо тільки "просілі" елементи, зберігаємо оригінальний корпус і роз'єм — самокат їде далі без переплати за новий акумулятор.
+    </div>
+  </div>
+</section>
+
+<section class="buyback">
+  <div class="wrap buyback-inner reveal">
+    <div class="buyback-text">
+      <span class="tag" style="color:var(--navy);">Прийом техніки</span>
+      <h2>Викупимо ваш старий самокат</h2>
+      <p>Не їздить, не заряджається, лежить без діла в коридорі — байдуже. Оцінимо стан безкоштовно і запропонуємо ціну того ж дня.</p>
+    </div>
+    <a href="#contact" class="btn btn-primary btn-large">Надіслати фото самоката →</a>
+  </div>
+</section>
+
+<section class="section alt" id="why">
+  <div class="wrap">
+    <div class="check-panel reveal">
+      <div class="lead-col">
+        <span class="tag" style="color:var(--volt);">Акт прийому</span>
+        <h2>Чому самокат везуть саме до нас</h2>
+        <p>Ми не гадаємо — ми перевіряємо кожен вузол за одним і тим самим протоколом, тому діагноз не змінюється від майстра до майстра.</p>
+      </div>
+      <ul class="checklist">
+        <li><span class="num">01</span><div><strong>5+ років у ремонті PEV</strong><span>Бачили практично всі несправності Xiaomi, Kugoo, Ninebot.</span></div></li>
+        <li><span class="num">02</span><div><strong>Гарантія на роботи</strong><span>Письмово фіксуємо термін гарантії в акті прийому.</span></div></li>
+        <li><span class="num">03</span><div><strong>Оригінальні та сумісні запчастини</strong><span>Показуємо стару деталь і пропонуємо варіант заміни.</span></div></li>
+        <li><span class="num">04</span><div><strong>Ремонт день у день</strong><span>Прості несправності — контролер, шина, гальма — того ж дня.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">З майстерні</span>
+        <h2>Останні кейси</h2>
+      </div>
+      <p>Реальні самокати, які пройшли через нашу діагностику цього місяця.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case reveal">
+        <div class="case-photo">
+          <img src="images/m365.jpg" alt="Xiaomi M365 після ремонту">
+          <span class="stamp">ТИКЕТ #0231</span>
+        </div>
+        <div class="case-info">
+          <div class="model">Xiaomi M365</div>
+          <div class="note">Заміна гальмівного тросика, чистка контактів дисплея.</div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case-photo">
+          <img src="images/kugo.jpg" alt="Kugoo на діагностиці">
+          <span class="stamp">ТИКЕТ #0244</span>
+        </div>
+        <div class="case-info">
+          <div class="model">Kugoo</div>
+          <div class="note">Перепакування акумулятора, оновлення прошивки контролера.</div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case-photo">
+          <img src="images/koogo.jpg" alt="Панель керування самоката під час ремонту">
+          <span class="stamp">ТИКЕТ #0256</span>
+        </div>
+        <div class="case-info">
+          <div class="model">Панель керування</div>
+          <div class="note">Заміна шлейфа дисплея, калібрування датчика швидкості.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="workshop" id="workshop">
+  <div class="workshop-overlay"></div>
+  <div class="wrap workshop-inner">
+    <div class="section-head reveal" style="border-bottom-color:rgba(255,255,255,0.18);">
+      <div>
+        <span class="tag" style="color:var(--volt);">Зсередини</span>
+        <h2 style="color:#fff;">Розбираємо, щоб знайти причину</h2>
+      </div>
+      <p style="color:#C6CEDB;">Кожен вузол знімається окремо — так ми не пропускаємо приховані несправності.</p>
+    </div>
+    <div class="workshop-grid">
+      <div class="wshot reveal"><img src="images/bg-parts-1.jpg" alt="Повний розбір електросамоката для діагностики"></div>
+      <div class="wshot reveal"><img src="images/bg-parts-3.jpg" alt="Заміна колеса та гальмівного диска"></div>
+      <div class="wshot reveal"><img src="images/bg-parts-2.jpg" alt="Розбір позашляхового електросамоката"></div>
+      <a class="wshot ig-phone reveal" href="https://www.instagram.com/scooter__clinic?igsh=Y2p5aTdpdDkyc3Vq" target="_blank" rel="noopener">
+        <img src="images/bg-ig-screenshot.jpg" alt="Публікація Scooter Clinic в Instagram">
+        <span class="ig-label">Дивитись в Instagram →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="video">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">Відео</span>
+        <h2>Ремонт у форматі відео</h2>
+      </div>
+      <p>Знімаємо процес ремонту, щоб ви бачили, за що платите.</p>
+    </div>
+    <div class="video-frame reveal">
+      <iframe src="https://www.youtube.com/embed/9Td0LP-tExs" title="Scooter Clinic — відео ремонту" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag">Відгуки</span>
+        <h2>Що кажуть клієнти</h2>
+      </div>
+      <p>Без редагування — просимо оцінку одразу після видачі самоката.</p>
+    </div>
+    <div class="review-row">
+      <div class="review-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>Швидко знайшли несправність та відремонтували самокат за один день. Показали, що саме згоріло.</p>
+        <div class="who mono">Олег · Kugoo M4</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>Після перепакування акумулятора запас ходу став навіть більшим, ніж був спочатку.</p>
+        <div class="who mono">Марія · Xiaomi M365</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>Дали письмовий акт з переліком робіт і гарантією — раніше в жодній майстерні такого не було.</p>
+        <div class="who mono">Андрій · Ninebot Max</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap contact-wrap">
+    <div class="contact-info reveal">
+      <span class="tag" style="color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:10px;">Заявка</span>
+      <h2>Оформіть новий тикет</h2>
+      <p>Опишіть проблему — передзвонимо протягом години і призначимо час діагностики.</p>
+
+      <div class="info-row">
+        <div class="ico">☎</div>
+        <div><strong>Телефон</strong><span><a href="tel:+380680116598">+380 68 011 65 98</a></span></div>
+      </div>
+      <div class="info-row">
+        <div class="ico">📍</div>
+        <div><strong>Місто</strong><span>Вараш</span></div>
+      </div>
+      <div class="info-row">
+        <div class="ico">TG</div>
+        <div><strong>Telegram</strong><span><a href="https://t.me/scooterclinic" target="_blank" rel="noopener">@scooterclinic</a></span></div>
+      </div>
+      <div class="info-row">
+        <div class="ico">IG</div>
+        <div><strong>Instagram</strong><span><a href="https://www.instagram.com/scooter__clinic?igsh=Y2p5aTdpdDkyc3Vq" target="_blank" rel="noopener">@scooter__clinic</a></span></div>
+      </div>
+      <div class="info-row">
+        <div class="ico">TT</div>
+        <div><strong>TikTok</strong><span><a href="https://www.tiktok.com/@scooterclinic2?_r=1&_t=ZS-97pIhgwGCkT" target="_blank" rel="noopener">@scooterclinic2</a></span></div>
+      </div>
+      <div class="info-row">
+        <div class="ico">OLX</div>
+        <div><strong>OLX</strong><span><a href="https://m.olx.ua/uk/business-card/scooterclinic-535fcbb7/" target="_blank" rel="noopener">Візитка компанії</a></span></div>
+      </div>
+    </div>
+
+    <form class="order-form reveal" id="orderForm">
+      <div class="form-head">
+        <h3>Новий тикет</h3>
+        <span class="mono">№ присвоюється після відправки</span>
+      </div>
+      <div class="field">
+        <label>Ваше ім'я</label>
+        <input type="text" name="name" placeholder="Ім'я" required>
+      </div>
+      <div class="field">
+        <label>Телефон</label>
+        <input type="tel" name="phone" placeholder="+380" required>
+      </div>
+      <div class="field">
+        <label>Модель самоката</label>
+        <input type="text" name="model" placeholder="Наприклад, Xiaomi M365">
+      </div>
+      <div class="field">
+        <label>Опис проблеми</label>
+        <textarea name="message" placeholder="Що сталося з самокатом?"></textarea>
+      </div>
+      <button class="submit-btn" type="submit">Надіслати заявку</button>
+      <div class="form-note mono" id="formNote"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+// ЗАМІНІТЬ цей рядок на URL вашого Cloudflare Worker після деплою,
+// наприклад: "https://scooter-clinic-form.ваш-нік.workers.dev"
+const FORM_ENDPOINT = "https://scooter-clinic-form.YOUR-SUBDOMAIN.workers.dev";
+
+document.getElementById('orderForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = this.querySelector('.submit-btn');
+  const note = document.getElementById('formNote');
+  const original = btn.textContent;
+  btn.textContent = 'Надсилаємо…';
+  btn.disabled = true;
+
+  const payload = {
+    name: this.name.value,
+    phone: this.phone.value,
+    model: this.model.value,
+    message: this.message.value,
+  };
+
+  try {
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      btn.textContent = 'Заявку надіслано ✓';
+      note.textContent = 'Ми зателефонуємо вам найближчим часом.';
+      this.reset();
+    } else {
+      throw new Error(data.error || 'Помилка надсилання');
+    }
+  } catch (err) {
+    btn.textContent = original;
+    note.textContent = 'Не вдалося надіслати. Зателефонуйте нам напряму: +380 68 011 65 98';
+    note.style.color = '#C0392B';
+  } finally {
+    btn.disabled = false;
+    setTimeout(()=>{ if(btn.textContent==='Заявку надіслано ✓') btn.textContent = original; }, 4000);
+  }
+});
+</script>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand"><img src="images/logo-transparent.png" alt="Scooter Clinic"><span>Scooter Clinic</span></div>
+      <div class="foot-links">
+        <a href="#services">Послуги</a>
+        <a href="#why">Чому ми</a>
+        <a href="#cases">Кейси</a>
+        <a href="#reviews">Відгуки</a>
+        <a href="#contact">Контакти</a>
+      </div>
+    </div>
+    <div class="foot-social">
+      <a href="https://t.me/scooterclinic" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://www.instagram.com/scooter__clinic?igsh=Y2p5aTdpdDkyc3Vq" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@scooterclinic2?_r=1&_t=ZS-97pIhgwGCkT" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://m.olx.ua/uk/business-card/scooterclinic-535fcbb7/" target="_blank" rel="noopener">OLX</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Scooter Clinic. Ремонт електросамокатів.</span>
+      <span>Telegram @ScooterClinic · Instagram @ScooterClinic</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
